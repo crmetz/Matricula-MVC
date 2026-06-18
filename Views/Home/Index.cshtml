@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Início";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-6">Matrículas em Cursos de Graduação — Região Sul</h1>
+    <p class="text-muted">Análises sobre o número de alunos matriculados (Censo da Educação Superior).</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Total por ano</h5>
+                <p class="card-text">Total de matriculados por ano, com filtro para Todos, EaD ou Presencial.</p>
+                <a class="btn btn-primary" asp-controller="Analises" asp-action="TotalPorAno">Abrir</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Ranking de cursos (2023)</h5>
+                <p class="card-text">10 cursos com maior número de matrículas, Presencial e EaD.</p>
+                <a class="btn btn-primary" asp-controller="Analises" asp-action="RankingCursos">Abrir</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Ranking de IES (2023)</h5>
+                <p class="card-text">10 instituições com mais matrículas, com filtro públicas/privadas.</p>
+                <a class="btn btn-primary" asp-controller="Analises" asp-action="RankingIes">Abrir</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Linha do tempo de um curso</h5>
+                <p class="card-text">Evolução das matrículas de um curso ano a ano, com filtro de modalidade.</p>
+                <a class="btn btn-primary" asp-controller="Analises" asp-action="LinhaDoTempo">Abrir</a>
+            </div>
+        </div>
+    </div>
+</div>

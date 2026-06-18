@@ -1,0 +1,29 @@
+@model Matriculas.Models.ViewModels.RankingIesViewModel
+@using Matriculas.Models
+@{
+    ViewData["Title"] = "Ranking de IES";
+}
+
+<h2>Ranking de IES em @Model.Ano</h2>
+<p class="text-muted">10 instituições com maior número de matrículas.</p>
+
+<form method="get" class="row row-cols-auto g-2 align-items-end mb-3">
+    <div class="col">
+        <label class="form-label" for="categoria">Categoria administrativa</label>
+        <select id="categoria" name="categoria" class="form-select" onchange="this.form.submit()">
+            <option value="@Categorias.Publicas" selected="@(Model.Categoria == Categorias.Publicas)">Públicas</option>
+            <option value="@Categorias.Privadas" selected="@(Model.Categoria == Categorias.Privadas)">Privadas</option>
+        </select>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Presencial</h4>
+        @await Html.PartialAsync("_TabelaRanking", Model.Presenciais)
+    </div>
+    <div class="col-md-6">
+        <h4>EaD</h4>
+        @await Html.PartialAsync("_TabelaRanking", Model.EaD)
+    </div>
+</div>

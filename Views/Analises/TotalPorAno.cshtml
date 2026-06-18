@@ -1,0 +1,33 @@
+@model Matriculas.Models.ViewModels.TotalPorAnoViewModel
+@using Matriculas.Models
+@{
+    ViewData["Title"] = "Total por ano";
+}
+
+<h2>Total de matriculados por ano</h2>
+
+<form method="get" class="row row-cols-auto g-2 align-items-end mb-3">
+    <div class="col">
+        <label class="form-label" for="modalidade">Modalidade</label>
+        <select id="modalidade" name="modalidade" class="form-select" onchange="this.form.submit()">
+            <option value="@Modalidades.Todos" selected="@(Model.Modalidade == Modalidades.Todos)">Todos</option>
+            <option value="@Modalidades.Presencial" selected="@(Model.Modalidade == Modalidades.Presencial)">Presencial</option>
+            <option value="@Modalidades.EaD" selected="@(Model.Modalidade == Modalidades.EaD)">EaD</option>
+        </select>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered w-auto">
+    <thead>
+        <tr><th>Ano</th><th class="text-end">Total de matriculados</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Totais)
+        {
+            <tr>
+                <td>@item.Ano</td>
+                <td class="text-end">@item.Total.ToString("N0")</td>
+            </tr>
+        }
+    </tbody>
+</table>
