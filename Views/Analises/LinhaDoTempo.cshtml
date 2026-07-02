@@ -36,23 +36,74 @@
     <h4>@Model.NomeCurso <small class="text-muted">(@Model.Modalidade)</small></h4>
     @if (Model.Serie.Any())
     {
-        <table class="table table-striped table-bordered w-auto">
-            <thead>
-                <tr><th>Ano</th><th class="text-end">Matriculados</th></tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Serie)
-                {
-                    <tr>
-                        <td>@item.Ano</td>
-                        <td class="text-end">@item.Total.ToString("N0")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="row g-4 align-items-start">
+            <div class="col-12 col-lg-auto">
+                <table class="table table-striped table-bordered w-auto">
+                    <thead>
+                        <tr><th>Ano</th><th class="text-end">Matriculados</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Serie)
+                        {
+                            <tr>
+                                <td>@item.Ano</td>
+                                <td class="text-end">@item.Total.ToString("N0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-lg">
+                <canvas id="graficoLinhaTempo" height="140"></canvas>
+            </div>
+        </div>
     }
     else
     {
         <p class="text-muted">Nenhuma matrícula encontrada para esse curso/modalidade.</p>
+    }
+}
+
+@section Scripts {
+    @if (Model.Serie.Any())
+    {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+        <script>
+            (function () {
+                const anos = @Json.Serialize(Model.Serie.Select(s => s.Ano));
+                const totais = @Json.Serialize(Model.Serie.Select(s => s.Total));
+                const ctx = document.getElementById("graficoLinhaTempo");
+                if (!ctx || typeof Chart === "undefined") return;
+
+                new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: anos,
+                        datasets: [{
+                            label: "Matriculados",
+                            data: totais,
+                            borderColor: "#0d6efd",
+                            backgroundColor: "rgba(13, 110, 253, 0.1)",
+                            fill: true,
+                            tension: 0.2,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            title: { display: true, text: "Evolução de matriculados" }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { callback: v => v.toLocaleString("pt-BR") }
+                            }
+                        }
+                    }
+                });
+            })();
+        </script>
     }
 }
